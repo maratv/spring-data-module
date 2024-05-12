@@ -1,0 +1,39 @@
+### Add book
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "title": "Generation Pi",
+  "language": "ru",
+  "category": {
+    "name": "Проза"
+  },
+  "active": true,
+  "authors": [
+    {
+      "firstName": "Пелевин",
+      "lastName": "Виктор",
+      "phone": "0003"
+    }
+  ]
+}
+
+### Delete book
+DELETE http://localhost:8080/books/delete/2
+
+### Update book
+PUT http://localhost:8080/books/update/1
+Content-Type: application/json
+
+{
+  "title": "Анна Каренина"
+}
+
+### Get all books
+GET http://localhost:8080/books
+
+### Get  books by category
+GET http://localhost:8080/books/category/Роман
+
+### Get  books by language
+GET http://localhost:8080/books/language/ru

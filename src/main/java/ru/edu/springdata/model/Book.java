@@ -1,5 +1,11 @@
 package ru.edu.springdata.model;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Сущность описывающая книги.
  * Между книгами и категориями связь один ко многим.
@@ -9,16 +15,29 @@ package ru.edu.springdata.model;
  * Между авторами и адресами свзяь один к одному
  */
 
+@Data
+@Entity
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
 
     private String language;
 
+    @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
 
     private boolean active;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "authors_books",
+            joinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id")
+    )
+    private Set<Author> authors = new HashSet<>();
+
 }
 
